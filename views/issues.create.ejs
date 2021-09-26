@@ -1,0 +1,21 @@
+<%- include("layout/header.ejs") %>
+    <h3>Create Issue</h3>
+    <form method="POST">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" name="title">
+        </div>
+        <div class="mb-3">
+          <label for="comment" class="form-label">Comment</label>
+          <textarea type="password" class="form-control" id="comment" name="comment"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select name="status" id="status" class='form-control'>
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+            </select>
+          </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+<%- include("layout/footer.ejs") %>

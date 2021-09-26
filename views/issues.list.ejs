@@ -1,0 +1,21 @@
+<%- include("layout/header.ejs") %>
+<a href="/create" class="btn btn-primary">Create</a>
+<table class='table'>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Comments</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% issues.forEach((issue) => { %>
+            <tr>
+                <td><%= issue.title %></td>
+                <td><%= issue.comment %></td>
+                <td><%= issue.status %></td>
+            </tr>
+            <%})%>
+        </tbody>
+    </table>
+<%- include("layout/footer.ejs") %>
