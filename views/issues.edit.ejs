@@ -1,5 +1,5 @@
 <%- include('layout/header.ejs') -%>
-<h3>Create Issue</h3>
+<h3>Edit Issue</h3>
 <hr />
 <form method="POST">
   <div class="mb-3">
@@ -9,7 +9,7 @@
       type="text"
       class="form-control <%= errors.title ? 'is-invalid' : '' %>"
       id="title"
-      value="<%= form.title %>"
+      value="<%= form.title || issue.title %>"
     />
     <% if (errors.title) { %>
     <div class="invalid-feedback"><%= errors.title %></div>
@@ -21,7 +21,7 @@
       name="comment"
       class="form-control <%= errors.comment ? 'is-invalid' : '' %>"
       id="comment"
-    ><%= form.comment %></textarea>
+    ><%= form.comment || issue.comment %></textarea>
     <% if (errors.comment) { %>
     <div class="invalid-feedback"><%= errors.comment %></div>
     <% } %>
@@ -29,8 +29,8 @@
   <div class="mb-3">
     <label for="status" class="form-label">Status</label>
     <select name="status" id="status" class="form-control">
-      <option value="Open" <%= form.status === 'Open' ? 'selected' : '' %>>Open</option>
-      <option value="Closed" <%= form.status === 'Closed' ? 'selected' : '' %>>Closed</option>
+      <option value="Open" <%= (form.status||issue.status) === 'Open' ? 'selected' : '' %>>Open</option>
+      <option value="Closed" <%= (form.status||issue.status) === 'Closed' ? 'selected' : '' %>>Closed</option>
     </select>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>

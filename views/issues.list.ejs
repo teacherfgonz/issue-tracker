@@ -1,21 +1,92 @@
-<%- include("layout/header.ejs") %>
-<a href="/create" class="btn btn-primary">Create</a>
-<table class='table'>
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Comments</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% issues.forEach((issue) => { %>
-            <tr>
-                <td><%= issue.title %></td>
-                <td><%= issue.comment %></td>
-                <td><%= issue.status %></td>
-            </tr>
-            <%})%>
-        </tbody>
-    </table>
-<%- include("layout/footer.ejs") %>
+<%- include('layout/header.ejs') -%>
+<a href="/create" class="btn btn-primary">
+  <i class="bi bi-plus-circle"></i> Create
+</a>
+<% if (messages) { messages.forEach(message => { %>
+<div class="alert alert-success"><%= message %></div>
+<% })} %>
+<hr />
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th width="33%">Comment</th>
+      <th>Status</th>
+      <th width="15%"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% issues.forEach((issue) => { %>
+    <tr>
+      <td><%= issue.title %></td>
+      <td><%= issue.comment %></td>
+      <td><%= issue.status %></td>
+      <td>
+        <a href="/edit/<%= issue.id %>" class="btn btn-secondary">
+          <i class="bi bi-pencil"></i> Edit
+        </a>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-delete-issue-id="<%= issue.id %>"
+          data-bs-toggle="modal"
+          data-bs-target="#confirmDelete"
+        >
+          <i class="bi bi-trash"></i> Delete
+        </button>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+<div
+  class="modal fade"
+  id="confirmDelete"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="confirmDeleteLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteLabel">Confirm</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Are you sure you want to delete this issue?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-danger" id="deleteIssueBtn">
+          <i class="bi bi-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document
+    .getElementById("confirmDelete")
+    .addEventListener("show.bs.modal", (event) => {
+      document.getElementById("deleteIssueBtn").dataset.deleteIssueId =
+        event.relatedTarget.dataset.deleteIssueId;
+    });
+  document
+    .getElementById("deleteIssueBtn")
+    .addEventListener("click", (event) => {
+      event.target.setAttribute("disabled", "disabled");
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = `/delete/${event.target.dataset.deleteIssueId}`;
+      document.body.appendChild(form);
+      form.submit();
+    });
+</script>
+<%- include('layout/footer.ejs') -%>

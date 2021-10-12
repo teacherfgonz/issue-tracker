@@ -4,6 +4,11 @@ module.exports = {
      */
     port: process.env.PORT || 3000,
 
+    session: {
+        secret: process.env.APP_SECRET || "StrongSecret",
+        cookieName: process.env.SESSION_COOKIE_NAME || 'issue_tracker_session',
+    },
+
     /**
      * MongoDB connection parameters
      */
