@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <title>Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet" />
+  </head>
+  <body class="text-center">
+    <main class="form-signin">
+      <form method="POST">
+        <i class="bi-shield-lock" style="font-size: 4rem"></i>
+        <h1 class="h3 mb-3 fw-normal">Register</h1>
+        <div class="form-floating">
+          <input 
+          type="text" 
+          name="name" 
+          class="form-control"/>
+          <label for="floatingInput"><%= errors.name || "Name" %></label>
+          <% if (errors.name) { %>
+            <div class="invalid-feedback"><%= errors.name %></div>
+            <% } %>
+        </div>
+        <div class="form-floating">
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            id="floatingInput"
+          />
+          <label for="floatingInput">Email address</label>
+          <% if (errors.email) { %>
+            <div class="invalid-feedback"><%= errors.email %></div>
+            <% } %>
+        </div>
+        <div class="form-floating">
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            id="floatingPassword"
+          />
+          <label for="floatingPassword">Password</label>
+          <% if (errors.password) { %>
+            <div class="invalid-feedback"><%= errors.password %></div>
+            <% } %>
+        </div>
+
+        <!-- <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me" /> Remember me
+          </label>
+        </div> -->
+        <button class="w-100 btn btn-lg btn-primary" type="submit">
+          Sign up
+        </button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+      </form>
+    </main>
+  </body>
+</html>
