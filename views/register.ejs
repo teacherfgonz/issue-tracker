@@ -45,26 +45,37 @@
           <input 
           type="text" 
           name="name" 
-          class="form-control"/>
+          class="form-control <%= errors.name ? 'is-invalid' : '' %>"
+          value="<%= form.name || '' %>" />
           <label for="floatingInput">Name</label>
+          <% if (errors.name) { %>
+            <div class="invalid-feedback"><%= errors.name %></div>
+            <% } %>
         </div>
         <div class="form-floating">
           <input
             type="email"
             name="email"
-            class="form-control"
+            class="form-control <%= errors.email ? 'is-invalid' : '' %>"
             id="floatingInput"
+            value="<%= form.email || '' %>"
           />
           <label for="floatingInput">Email address</label>
+          <% if (errors.email) { %>
+            <div class="invalid-feedback"><%= errors.email %></div>
+            <% } %>
         </div>
         <div class="form-floating">
           <input
             type="password"
             name="password"
-            class="form-control"
+            class="form-control <%= errors.password ? 'is-invalid' : '' %>"
             id="floatingPassword"
           />
           <label for="floatingPassword">Password</label>
+          <% if (errors.password) { %>
+            <div class="invalid-feedback"><%= errors.password %></div>
+            <% } %>
         </div>
 
         <!-- <div class="checkbox mb-3">
