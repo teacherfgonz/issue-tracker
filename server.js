@@ -74,7 +74,9 @@ app.post(
 );
 
 app.get("/register", (req, res) => {
-    res.render("register.ejs")
+    const errors = JSON.parse(req.flash("errors")[0] || "{}");
+    const form = JSON.parse(req.flash("form")[0] || "{}");
+    res.render("register.ejs", errors, form)
 });
 
 app.post("/register", async (req, res) => {
