@@ -57,7 +57,7 @@ passport.use(
 passport.serializeUser((user, done) => done(null, user._id));
 passport.deserializeUser(async (id, done) => {
     await mongoose.connect(config.mongodb.uri);
-    const user = await user.findOne({_id: id});
+    const user = await User.findOne({_id: id});
     done(null, user);
 })
 
@@ -109,7 +109,7 @@ app.post("/register", async (req, res) => {
     res.redirect("/login");
 })
 
-app.use((req, res) => {
+app.use((req, res, next) => {
     if (req.isAuthenticated()) return next();
     res.redirect("/login");
 });
