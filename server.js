@@ -76,7 +76,7 @@ app.post(
 app.get("/register", (req, res) => {
     const errors = JSON.parse(req.flash("errors")[0] || "{}");
     const form = JSON.parse(req.flash("form")[0] || "{}");
-    const emailError = req.flash("emailError")
+    const emailError = req.flash("emailerror")
     res.render("register.ejs", {errors, form, emailError})
 });
 
@@ -100,38 +100,21 @@ app.post("/register", async (req, res) => {
         return;
     }
     await mongoose.connect(config.mongodb.uri);
-    // const {name, email, password} = req.body
-    const insertedDoc = {
-        name: req.body.name,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 10)
+    const {name, email, password} = req.body
+    const dbEmail = await User.findOne({email})
+
+    if (dbEmail !== null) {
+        req.flash("emailerror", "The email already exists")
+        req.flash("form", JSON.stringify(req.body));
+        res.redirect('/register')
+    } else {
+        await User.create({
+            name,
+            email,
+            password: bcrypt.hashSync(password, 10),
+        });
+        res.redirect("/login");
     }
-    await User.findOneAndUpdate(
-        {   name: req.body.name,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 10)},
-        {   insertedDoc },
-        { upsert: true, new: true, runValidators: true},
-        function(err, doc) {
-            if (err) {
-                req.flash('emailerror', 'The email already exists')
-                res.redirect("/register")
-            } else {
-                res.redirect("/login")
-            }
-        }
-    );
-    
-    // .then(res => console.log(res)).catch(err => console.log(err));
-
-    // res.redirect("/login");
-
-    // await User.create({
-    //     name,
-    //     email,
-    //     password: bcrypt.hashSync(password, 10),
-    // });
-    // res.redirect("/login");
 
 })
 
