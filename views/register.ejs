@@ -61,8 +61,8 @@
             value="<%= form.email || '' %>"
           />
           <label for="floatingInput">Email address</label>
-          <% if (errors.email) { %>
-            <div class="invalid-feedback"><%= errors.email %></div>
+          <% if (errors.email || emailError) { %>
+            <div class="invalid-feedback"><%= errors.email || emailError %></div>
             <% } %>
         </div>
         <div class="form-floating">
