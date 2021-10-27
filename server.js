@@ -77,7 +77,7 @@ app.get("/register", (req, res) => {
     const errors = JSON.parse(req.flash("errors")[0] || "{}");
     const form = JSON.parse(req.flash("form")[0] || "{}");
     const emailError = req.flash("emailerror")
-    res.render("register.ejs", {errors, form, emailError})
+    res.render("register.ejs", {errors, form})
 });
 
 app.post("/register", async (req, res) => {
@@ -91,20 +91,20 @@ app.post("/register", async (req, res) => {
     const { error } = schema.validate(req.body, { abortEarly: false });
     const errors = flatJoi(error);
 
-    console.log(errors)
-
     if (Object.keys(errors).length > 0) {
         req.flash("errors", JSON.stringify(errors));
         req.flash("form", JSON.stringify(req.body));
         res.redirect("/register")
         return;
     }
+    
     await mongoose.connect(config.mongodb.uri);
     const {name, email, password} = req.body
     const dbEmail = await User.findOne({email})
 
     if (dbEmail !== null) {
-        req.flash("emailerror", "The email already exists")
+        errors.email = "The email already exists"
+        req.flash("errors", JSON.stringify(errors))
         req.flash("form", JSON.stringify(req.body));
         res.redirect('/register')
     } else {
