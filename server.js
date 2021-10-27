@@ -76,7 +76,6 @@ app.post(
 app.get("/register", (req, res) => {
     const errors = JSON.parse(req.flash("errors")[0] || "{}");
     const form = JSON.parse(req.flash("form")[0] || "{}");
-    const emailError = req.flash("emailerror")
     res.render("register.ejs", {errors, form})
 });
 
